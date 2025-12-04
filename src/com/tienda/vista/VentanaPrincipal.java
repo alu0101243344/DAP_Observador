@@ -4,59 +4,56 @@ import com.tienda.modelo.Perfume;
 import com.tienda.modelo.Usuario;
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VentanaPrincipal extends JFrame {
     private JPanel panelProductos;
+    private List<Perfume> inventario;
 
     public VentanaPrincipal() {
         setTitle("Panel de Control - ADMINISTRADOR");
-        setSize(500, 400);
+        setSize(500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         setLocationRelativeTo(null);
 
+        inventario = new ArrayList<>();
+        inventario.add(new Perfume("Chanel No. 5", "Chanel", 150.0));
+        inventario.add(new Perfume("Sauvage", "Dior", 120.0));
+        inventario.add(new Perfume("Acqua Di Gio", "Armani", 95.0));
+        inventario.add(new Perfume("One Million", "Paco Rabanne", 85.0));
+
         inicializarComponentes();
+
+        crearUsuariosDePrueba();
     }
 
     private void inicializarComponentes() {
         panelProductos = new JPanel();
-        panelProductos.setLayout(new GridLayout(0, 1, 10, 10)); // Grid dinámico vertical
+        panelProductos.setLayout(new GridLayout(0, 1, 10, 10));
+
+        for (Perfume p : inventario) {
+            panelProductos.add(new PanelControlProducto(p));
+        }
 
         JScrollPane scroll = new JScrollPane(panelProductos);
-        scroll.setBorder(BorderFactory.createTitledBorder("Inventario de Perfumes"));
+        scroll.setBorder(BorderFactory.createTitledBorder("Gestión de Inventario"));
 
         add(scroll, BorderLayout.CENTER);
-        add(new JLabel("Control de Stock y Precios (Los usuarios recibirán ventanas emergentes)"), BorderLayout.SOUTH);
-
-        configurarDatosPrueba();
+        add(new JLabel("Control de Stock y Precios"), BorderLayout.SOUTH);
     }
 
-    private void configurarDatosPrueba() {
-        Perfume p1 = new Perfume("Chanel No. 5", "Chanel", 150.0);
-        Perfume p2 = new Perfume("Sauvage", "Dior", 120.0);
-        Perfume p3 = new Perfume("Acqua Di Gio", "Armani", 95.0);
-
-        Usuario u1 = new Usuario("Ana", "ana@gmail.com");
-        Usuario u2 = new Usuario("Carlos", "carlos@hotmail.com");
-        Usuario u3 = new Usuario("Lucía", "lucia@yahoo.com");
-
-        p1.agregarObservador(u1);
-        p1.agregarObservador(u3);
-
-        p2.agregarObservador(u1);
-        p2.agregarObservador(u2);
-
-        p3.agregarObservador(u3);
-
-        panelProductos.add(new PanelControlProducto(p1));
-        panelProductos.add(new PanelControlProducto(p2));
-        panelProductos.add(new PanelControlProducto(p3));
+    private void crearUsuariosDePrueba() {
+        new Usuario("Ana", "ana@gmail.com", inventario);
+        new Usuario("Carlos", "carlos@hotmail.com", inventario);
     }
 
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
 
         SwingUtilities.invokeLater(() -> {
             new VentanaPrincipal().setVisible(true);

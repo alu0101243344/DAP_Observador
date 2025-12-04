@@ -2,16 +2,17 @@ package com.tienda.modelo;
 
 import com.tienda.interfaces.IObservador;
 import com.tienda.vista.VentanaCorreo;
+import java.util.List;
 
 public class Usuario implements IObservador {
     private String nombre;
     private String email;
     private VentanaCorreo ventanaPersonal;
 
-    public Usuario(String nombre, String email) {
+    public Usuario(String nombre, String email, List<Perfume> listaProductosDisponibles) {
         this.nombre = nombre;
         this.email = email;
-        this.ventanaPersonal = new VentanaCorreo(nombre, email);
+        this.ventanaPersonal = new VentanaCorreo(this, listaProductosDisponibles);
     }
 
     @Override
