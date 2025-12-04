@@ -1,0 +1,89 @@
+@startuml
+class com.tienda.modelo.Perfume {
+- String marca
++ void setStock(boolean)
++ void setPrecio(double)
++ String getMarca()
++ String toString()
+}
+
+
+class com.tienda.modelo.Usuario {
+- String nombre
+- String email
+- VentanaCorreo ventanaPersonal
++ void actualizar(String,String,double,ImageIcon)
++ String getNombre()
+}
+
+
+interface com.tienda.interfaces.ISujeto {
+~ void agregarObservador(IObservador)
+~ void eliminarObservador(IObservador)
+~ void notificarObservadores(String)
+}
+
+class com.tienda.vista.VentanaCorreo {
+- JPanel panelBuzon
+- JPanel panelConfiguracion
+- JTabbedPane pestanas
+- Usuario usuarioPropietario
+- List<Perfume> listaProductos
+- void inicializarComponentes()
+- void generarListaSuscripciones()
++ void recibirNotificacion(String,String,ImageIcon)
+}
+
+
+abstract class com.tienda.modelo.Producto {
+# String nombre
+# double precio
+# boolean enStock
+# ImageIcon imagen
+# List<IObservador> observadores
++ void agregarObservador(IObservador)
++ void eliminarObservador(IObservador)
++ void notificarObservadores(String)
++ String getNombre()
++ double getPrecio()
++ boolean isEnStock()
++ ImageIcon getImagen()
+}
+
+
+class com.tienda.vista.PanelControlProducto {
+- Perfume perfume
+- JLabel lblInfo
+- JTextField txtPrecio
+- JButton btnActualizarPrecio
+- JCheckBox chkStock
+- JLabel lblImagen
+- void inicializarComponentes()
+- void actualizarPrecio()
+- void actualizarStock()
+}
+
+
+interface com.tienda.interfaces.IObservador {
+~ void actualizar(String,String,double,ImageIcon)
+}
+
+class com.tienda.vista.VentanaPrincipal {
+- JPanel panelProductos
+- List<Perfume> inventario
+- void cargarInventario()
+- void inicializarComponentes()
+- void registrarUsuarios()
++ {static} void main(String[])
+}
+
+
+
+
+com.tienda.modelo.Producto <|-- com.tienda.modelo.Perfume
+com.tienda.interfaces.IObservador <|.. com.tienda.modelo.Usuario
+com.tienda.vista.JFrame <|-- com.tienda.vista.VentanaCorreo
+com.tienda.interfaces.ISujeto <|.. com.tienda.modelo.Producto
+com.tienda.vista.JPanel <|-- com.tienda.vista.PanelControlProducto
+com.tienda.vista.JFrame <|-- com.tienda.vista.VentanaPrincipal
+@enduml
