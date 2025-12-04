@@ -3,8 +3,8 @@ package com.tienda.modelo;
 public class Perfume extends Producto {
     private String marca;
 
-    public Perfume(String nombre, String marca, double precio) {
-        super(nombre, precio);
+    public Perfume(String nombre, String marca, double precio, String urlImagen) {
+        super(nombre, precio, urlImagen);
         this.marca = marca;
     }
 
@@ -12,19 +12,25 @@ public class Perfume extends Producto {
         if (this.enStock != nuevoStock) {
             this.enStock = nuevoStock;
             if (this.enStock) {
-                notificarObservadores("Stock disponible. ¡Corre que se acaba!");
+                notificarObservadores("Stock disponible nuevamente");
             } else {
-                notificarObservadores("Producto agotado temporalmente.");
+                notificarObservadores("Producto agotado temporalmente");
             }
         }
     }
 
     public void setPrecio(double nuevoPrecio) {
         if (nuevoPrecio != this.precio) {
-            double variacion = ((nuevoPrecio - this.precio) / this.precio) * 100;
+            double precioAnterior = this.precio;
+            double porcentaje = ((nuevoPrecio - precioAnterior) / precioAnterior) * 100;
+
             this.precio = nuevoPrecio;
 
-            String mensaje = String.format("Nuevo precio: $%.2f (Variación: %.1f%%)", nuevoPrecio, variacion);
+            String signo = (porcentaje > 0) ? "+" : "";
+
+            String mensaje = String.format("Precio: $%.2f -> $%.2f (%s%.2f%%)",
+                    precioAnterior, this.precio, signo, porcentaje);
+
             notificarObservadores(mensaje);
         }
     }

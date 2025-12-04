@@ -2,6 +2,7 @@ package com.tienda.modelo;
 
 import com.tienda.interfaces.IObservador;
 import com.tienda.vista.VentanaCorreo;
+import javax.swing.ImageIcon;
 import java.util.List;
 
 public class Usuario implements IObservador {
@@ -16,11 +17,9 @@ public class Usuario implements IObservador {
     }
 
     @Override
-    public void actualizar(String producto, String mensaje, double precioActual) {
-        ventanaPersonal.recibirNotificacion(producto, mensaje);
+    public void actualizar(String producto, String mensaje, double precioActual, ImageIcon imagen) {
+        ventanaPersonal.recibirNotificacion(producto, mensaje, imagen);
     }
 
-    public String getNombre() {
-        return nombre;
-    }
+    public String getNombre() { return nombre; }
 }

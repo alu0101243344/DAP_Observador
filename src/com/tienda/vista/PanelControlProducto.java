@@ -10,27 +10,34 @@ public class PanelControlProducto extends JPanel {
     private JTextField txtPrecio;
     private JButton btnActualizarPrecio;
     private JCheckBox chkStock;
+    private JLabel lblImagen; // Nuevo componente
 
     public PanelControlProducto(Perfume perfume) {
         this.perfume = perfume;
         setLayout(new FlowLayout(FlowLayout.LEFT));
-        setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        setBackground(Color.WHITE);
 
         inicializarComponentes();
     }
 
     private void inicializarComponentes() {
-        lblInfo = new JLabel(perfume.toString());
-        txtPrecio = new JTextField(String.valueOf(perfume.getPrecio()), 10);
-        btnActualizarPrecio = new JButton("Actualizar Precio");
-        chkStock = new JCheckBox("En Stock");
+        // Mostramos la imagen
+        lblImagen = new JLabel(perfume.getImagen());
+
+        lblInfo = new JLabel("<html><b>" + perfume.getNombre() + "</b><br>" + perfume.getMarca() + "</html>");
+        lblInfo.setPreferredSize(new Dimension(150, 40));
+
+        txtPrecio = new JTextField(String.valueOf(perfume.getPrecio()), 6);
+        btnActualizarPrecio = new JButton("Actualizar");
+        chkStock = new JCheckBox("Stock");
 
         btnActualizarPrecio.addActionListener(e -> actualizarPrecio());
         chkStock.addActionListener(e -> actualizarStock());
 
-        add(new JLabel("Producto: "));
+        add(lblImagen);
         add(lblInfo);
-        add(new JLabel(" | Precio: "));
+        add(new JLabel(" $"));
         add(txtPrecio);
         add(btnActualizarPrecio);
         add(chkStock);
@@ -40,9 +47,8 @@ public class PanelControlProducto extends JPanel {
         try {
             double nuevoPrecio = Double.parseDouble(txtPrecio.getText());
             perfume.setPrecio(nuevoPrecio);
-            lblInfo.setText(perfume.toString());
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Precio inválido");
+            JOptionPane.showMessageDialog(this, "Precio erróneo");
         }
     }
 
