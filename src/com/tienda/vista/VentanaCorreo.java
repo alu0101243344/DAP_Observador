@@ -32,7 +32,6 @@ public class VentanaCorreo extends JFrame {
     private void inicializarComponentes() {
         pestanas = new JTabbedPane();
 
-        // Pestaña 1: Buzón
         panelBuzon = new JPanel();
         panelBuzon.setLayout(new BoxLayout(panelBuzon, BoxLayout.Y_AXIS));
         panelBuzon.setBackground(new Color(245, 245, 250));
@@ -41,7 +40,6 @@ public class VentanaCorreo extends JFrame {
         scrollBuzon.getVerticalScrollBar().setUnitIncrement(16);
         pestanas.addTab("Mis Notificaciones", scrollBuzon);
 
-        // Pestaña 2: Configuración con Botones
         panelConfiguracion = new JPanel();
         panelConfiguracion.setLayout(new BoxLayout(panelConfiguracion, BoxLayout.Y_AXIS));
         panelConfiguracion.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -67,14 +65,12 @@ public class VentanaCorreo extends JFrame {
                     BorderFactory.createEmptyBorder(5, 5, 5, 5)
             ));
 
-            // Imagen pequeña
+
             JLabel lblImg = new JLabel(p.getImagen());
 
-            // Nombre del producto
             JLabel lblNombre = new JLabel(p.getNombre());
             lblNombre.setFont(new Font("SansSerif", Font.BOLD, 13));
 
-            // BOTÓN DE ACCIÓN
             JButton btnAccion = new JButton("Suscribirse");
             btnAccion.setBackground(new Color(220, 255, 220)); // Verde claro
             btnAccion.setFocusPainted(false);
