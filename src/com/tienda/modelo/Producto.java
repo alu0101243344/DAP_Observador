@@ -13,16 +13,21 @@ public abstract class Producto implements ISujeto {
     protected ImageIcon imagen;
     protected List<IObservador> observadores;
 
-    public Producto(String nombre, double precio, String urlImagen) {
+    public Producto(String nombre, double precio, String nombreArchivoImagen) {
         this.nombre = nombre;
         this.precio = precio;
         this.enStock = false;
         this.observadores = new ArrayList<>();
 
         try {
-            ImageIcon original = new ImageIcon(new java.net.URL(urlImagen));
-            java.awt.Image escalada = original.getImage().getScaledInstance(60, 60, java.awt.Image.SCALE_SMOOTH);
-            this.imagen = new ImageIcon(escalada);
+            java.net.URL url = getClass().getResource("/com/tienda/recursos/" + nombreArchivoImagen);
+            if (url != null) {
+                ImageIcon original = new ImageIcon(url);
+                java.awt.Image escalada = original.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
+                this.imagen = new ImageIcon(escalada);
+            } else {
+                this.imagen = new ImageIcon();
+            }
         } catch (Exception e) {
             this.imagen = new ImageIcon();
         }

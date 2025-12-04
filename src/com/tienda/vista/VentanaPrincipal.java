@@ -12,26 +12,28 @@ public class VentanaPrincipal extends JFrame {
     private List<Perfume> inventario;
 
     public VentanaPrincipal() {
-        setTitle("ADMINISTRADOR - Tienda Perfumes");
-        setSize(600, 600);
+        setTitle("ADMINISTRADOR - Gestión de Catálogo");
+        setSize(550, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         setLocationRelativeTo(null);
 
-        // Imágenes reales de internet
-        String imgChanel = "https://fimgs.net/mdimg/perfume/375x500.640.jpg";
-        String imgDior = "https://fimgs.net/mdimg/perfume/375x500.31861.jpg";
-        String imgArmani = "https://fimgs.net/mdimg/perfume/375x500.418.jpg";
-        String imgOne = "https://fimgs.net/mdimg/perfume/375x500.3747.jpg";
-
-        inventario = new ArrayList<>();
-        inventario.add(new Perfume("Chanel No. 5", "Chanel", 150.0, imgChanel));
-        inventario.add(new Perfume("Sauvage", "Dior", 120.0, imgDior));
-        inventario.add(new Perfume("Acqua Di Gio", "Armani", 95.0, imgArmani));
-        inventario.add(new Perfume("One Million", "Paco Rabanne", 85.0, imgOne));
-
+        cargarInventario();
         inicializarComponentes();
-        crearUsuariosDePrueba();
+        registrarUsuarios();
+    }
+
+    private void cargarInventario() {
+        inventario = new ArrayList<>();
+
+        inventario.add(new Perfume("Valentino Extradose", "Valentino", 145.0, "valentino.jpg"));
+        inventario.add(new Perfume("Acqua di Gio Parfum", "Armani", 110.0, "gio_parfum.jpg"));
+        inventario.add(new Perfume("Versace Pour Homme", "Versace", 75.0, "versace.jpg"));
+        inventario.add(new Perfume("Liquid Brun", "French Avenue", 60.0, "liquid.jpg"));
+        inventario.add(new Perfume("Vulcan Feu", "Fragrance World", 55.0, "vulcan.jpg"));
+        inventario.add(new Perfume("Xerjoff Naxos", "Xerjoff", 230.0, "naxos.jpg"));
+        inventario.add(new Perfume("SWY Intensely", "Armani", 90.0, "swy.jpg"));
+        inventario.add(new Perfume("Le Beau Le Parfum", "JPG", 105.0, "lebeau.jpg"));
     }
 
     private void inicializarComponentes() {
@@ -43,12 +45,16 @@ public class VentanaPrincipal extends JFrame {
         }
 
         JScrollPane scroll = new JScrollPane(panelProductos);
+        scroll.getVerticalScrollBar().setUnitIncrement(16);
+        scroll.setBorder(BorderFactory.createTitledBorder("Inventario Actual"));
+
         add(scroll, BorderLayout.CENTER);
     }
 
-    private void crearUsuariosDePrueba() {
-        new Usuario("Ana", "ana@gmail.com", inventario);
-        new Usuario("Carlos", "carlos@hotmail.com", inventario);
+    private void registrarUsuarios() {
+        new Usuario("Kevin", "kevin@tienda.com", inventario);
+        new Usuario("David", "david@tienda.com", inventario);
+        new Usuario("Alvaro", "alvaro@tienda.com", inventario);
     }
 
     public static void main(String[] args) {
