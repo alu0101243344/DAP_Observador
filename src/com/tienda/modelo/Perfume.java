@@ -12,18 +12,20 @@ public class Perfume extends Producto {
         if (this.enStock != nuevoStock) {
             this.enStock = nuevoStock;
             if (this.enStock) {
-                notificarObservadores("Stock disponible nuevamente");
+                notificarObservadores("Stock disponible. ¡Corre que se acaba!");
+            } else {
+                notificarObservadores("Producto agotado temporalmente.");
             }
         }
     }
 
     public void setPrecio(double nuevoPrecio) {
-        if (nuevoPrecio < this.precio) {
+        if (nuevoPrecio != this.precio) {
+            double variacion = ((nuevoPrecio - this.precio) / this.precio) * 100;
             this.precio = nuevoPrecio;
-            notificarObservadores("¡Bajada de precio!");
-        } else if (nuevoPrecio > this.precio) {
-            this.precio = nuevoPrecio;
-            notificarObservadores("El precio ha subido");
+
+            String mensaje = String.format("Nuevo precio: $%.2f (Variación: %.1f%%)", nuevoPrecio, variacion);
+            notificarObservadores(mensaje);
         }
     }
 
